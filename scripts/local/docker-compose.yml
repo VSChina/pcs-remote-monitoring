@@ -17,7 +17,7 @@ version: "3"
 
 services:
   reverseproxy:
-    image: azureiotpcs/remote-monitoring-nginx:testing
+    image: vschinaiot/remote-monitoring-nginx:testing
     ports:
       - "8080:80"
     depends_on:
@@ -26,24 +26,22 @@ services:
       - iothubmanager
       - devicesimulation
       - telemetry
-      - config
     volumes:
       - ./config/nginx.conf:/app/config/nginx.conf:ro
 
   webui:
-    image: azureiotpcs/pcs-remote-monitoring-webui:testing
+    image: vschinaiot/pcs-webui:testing
     depends_on:
       - auth
       - iothubmanager
       - devicesimulation
       - telemetry
-      - config
   # NOTE: Volumes disabled for local development, uncomment if enabling auth
   # volumes:
   #   - ./webui-config.js:/app/build/webui-config.js:ro
 
   auth:
-    image: azureiotpcs/pcs-auth-dotnet:testing
+    image: vschinaiot/pcs-auth:testing
     environment:
       - PCS_AUTH_ISSUER
       - PCS_AUTH_AUDIENCE
@@ -52,7 +50,7 @@ services:
       - PCS_APPLICATION_SECRET
 
   iothubmanager:
-    image: azureiotpcs/iothub-manager-dotnet:testing
+    image: vschinaiot/pcs-iothub-manager:testing
     environment:
       - PCS_IOTHUB_CONNSTRING
       - PCS_CONFIG_WEBSERVICE_URL=http://config:9005/v1
@@ -63,7 +61,7 @@ services:
       - PCS_APPLICATION_SECRET
 
   devicesimulation:
-    image: azureiotpcs/device-simulation-dotnet:testing
+    image: vschinaiot/pcs-device-simulation:testing
     depends_on:
       - storageadapter
     environment:
@@ -80,7 +78,7 @@ services:
   #   - ./my-device-models:/app/data:ro
 
   telemetry:
-    image: azureiotpcs/telemetry-dotnet:testing
+    image: vschinaiot/pcs-telemetry:testing
     depends_on:
       - storageadapter
     environment:
@@ -92,27 +90,8 @@ services:
       - PCS_CORS_WHITELIST
       - PCS_APPLICATION_SECRET
 
-  config:
-    image: azureiotpcs/pcs-config-dotnet:testing
-    depends_on:
-      - storageadapter
-      - devicesimulation
-      - telemetry
-      - iothubmanager
-    environment:
-      - PCS_STORAGEADAPTER_WEBSERVICE_URL=http://storageadapter:9022/v1
-      - PCS_DEVICESIMULATION_WEBSERVICE_URL=http://devicesimulation:9003/v1
-      - PCS_TELEMETRY_WEBSERVICE_URL=http://telemetry:9004/v1
-      - PCS_IOTHUBMANAGER_WEBSERVICE_URL=http://iothubmanager:9002/v1
-      - PCS_BINGMAP_KEY
-      - PCS_AUTH_ISSUER
-      - PCS_AUTH_AUDIENCE
-      - PCS_AUTH_REQUIRED
-      - PCS_CORS_WHITELIST
-      - PCS_APPLICATION_SECRET
-
   storageadapter:
-    image: azureiotpcs/pcs-storage-adapter-dotnet:testing
+    image: vschinaiot/pcs-storage-adapter:testing
     environment:
       - PCS_STORAGEADAPTER_DOCUMENTDB_CONNSTRING
       - PCS_AUTH_ISSUER
@@ -122,11 +101,10 @@ services:
       - PCS_APPLICATION_SECRET
 
   telemetryagent:
-    image: azureiotpcs/telemetry-agent-dotnet:testing
+    image: vschinaiot/pcs-telemetry-agent:testing
     depends_on:
       - telemetry
       - iothubmanager
-      - config
     environment:
       - PCS_TELEMETRYAGENT_DOCUMENTDB_CONNSTRING
       - PCS_TELEMETRY_WEBSERVICE_URL=http://telemetry:9004/v1

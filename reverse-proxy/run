@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Note: use lowercase names for the Docker images
-DOCKER_IMAGE="azureiotpcs/remote-monitoring-nginx:latest"
+DOCKER_IMAGE="vschinaiot/remote-monitoring-nginx:latest"
 PORT=10080
 
 set -e

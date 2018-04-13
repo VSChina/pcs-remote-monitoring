@@ -1,7 +1,7 @@
 #!/usr/bin/env bash -e
 
 # Note: use lowercase names for the Docker images
-DOCKER_IMAGE="azureiotpcs/remote-monitoring-nginx"
+DOCKER_IMAGE="vschinaiot/remote-monitoring-nginx"
 
 APP_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )/"
 

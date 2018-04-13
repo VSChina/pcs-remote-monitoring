@@ -4,8 +4,8 @@ VERSION=$1
 ACCESS_TOKEN=$2
 DOCKER_USER=$3
 DOCKER_PWD=$4
-FROM_DOCKERHUB_NAMESPACE=${5:-azureiotpcs}
-TO_DOCKERHUB_NAMESPACE=${6:-azureiotpcs}
+FROM_DOCKERHUB_NAMESPACE=${5:-vschinaiot}
+TO_DOCKERHUB_NAMESPACE=${6:-vschinaiot}
 SOURCE_TAG="${7:-testing}"
 DESCRIPTION=$8
 PRE_RELEASE=${9:-false}
@@ -125,19 +125,18 @@ tag_build_publish_repo() {
 check_input
 
 # DOTNET Microservices
-tag_build_publish_repo auth               pcs-auth-dotnet
-tag_build_publish_repo config             pcs-config-dotnet
-tag_build_publish_repo device-simulation  device-simulation-dotnet
-tag_build_publish_repo iothub-manager     iothub-manager-dotnet
-tag_build_publish_repo storage-adapter    pcs-storage-adapter-dotnet
-tag_build_publish_repo telemetry          device-telemetry-dotnet               telemetry-dotnet
-tag_build_publish_repo telemetry-agent    telemetry-agent-dotnet
-tag_build_publish_repo webui              pcs-remote-monitoring-webui
+tag_build_publish_repo auth               pcs-auth
+tag_build_publish_repo device-simulation  pcs-device-simulation
+tag_build_publish_repo iothub-manager     pcs-iothub-manager
+tag_build_publish_repo storage-adapter    pcs-storage-adapter
+tag_build_publish_repo telemetry          pcs-telemetry
+tag_build_publish_repo telemetry-agent    pcs-telemetry-agent
+tag_build_publish_repo webui              pcs-webui
 
 # PCS CLI
 tag_build_publish_repo cli                pcs-cli
 
 # Top Level repo
-tag_build_publish_repo reverse-proxy      azure-iot-pcs-remote-monitoring-dotnet remote-monitoring-nginx $DESCRIPTION
+tag_build_publish_repo reverse-proxy      pcs-remote-monitoring remote-monitoring-nginx $DESCRIPTION
 
 set +e
