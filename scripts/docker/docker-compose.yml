@@ -55,8 +55,6 @@ services:
       - PCS_AUTH_ISSUER
       - PCS_AUTH_AUDIENCE
       - PCS_APPLICATION_SECRET
-      # TODO: the dependency on config is temporary
-      - PCS_CONFIG_WEBSERVICE_URL=http://config:9005/v1
 
   devicesimulation:
     image: vschinaiot/pcs-device-simulation:1.0.0-preview
@@ -119,5 +117,4 @@ services:
       - PCS_AUTH_AUDIENCE
       - PCS_APPLICATION_SECRET
       - PCS_TELEMETRY_WEBSERVICE_URL=http://telemetry:9004/v1
-      - PCS_CONFIG_WEBSERVICE_URL=http://config:9005/v1
       - PCS_IOTHUBMANAGER_WEBSERVICE_URL=http://iothubmanager:9002/v1
